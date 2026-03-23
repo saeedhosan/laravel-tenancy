@@ -1,0 +1,66 @@
+{
+    "name": "saeedhosan/laravel-tenancy",
+    "description": "The package provides a clean and simple multi tenancy for Laravel app.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "tenancy",
+        "laravel-tenancy",
+        "multi-tenancy"
+    ],
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^11.0 || ^12.0 || ^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SaeedHosan\\Tenancy\\": "src/"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Saeed",
+            "email": "saeedhosansh@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "laravel/pint": "^1.25",
+        "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1",
+        "orchestra/testbench": "^10.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SaeedHosan\\Tenancy\\ServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "lint": "pint -v",
+        "test:lint": "pint --test -v",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+# includes:
+#     - vendor/larastan/larastan/extension.neon
+#     - vendor/nesbot/carbon/extension.neon
+#     - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    paths:
+        - src
+    level: max
+
+    tmpDir: /tmp/phpstan
+
+    ignoreErrors:
+        - "#PHPDoc tag @var#"
+        - "#Cannot cast mixed#"
