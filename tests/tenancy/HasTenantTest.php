@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ beforeEach(function (): void {
 });
 
 it('auto assigns tenant id on creation when scoped', function (): void {
-    $tenant  = TestTenant::create(['name' => 'Tenant A']);
+    $tenant = TestTenant::create(['name' => 'Tenant A']);
     $context = app(TenantContext::class);
     $context->setScoped(true);
     $context->setTenant($tenant);
@@ -57,7 +58,7 @@ it('auto assigns tenant id on creation when scoped', function (): void {
 });
 
 it('does not override explicit tenant id on creation', function (): void {
-    $tenant  = TestTenant::create(['name' => 'Tenant A']);
+    $tenant = TestTenant::create(['name' => 'Tenant A']);
     $context = app(TenantContext::class);
     $context->setScoped(true);
     $context->setTenant($tenant);
@@ -68,7 +69,7 @@ it('does not override explicit tenant id on creation', function (): void {
 });
 
 it('does not auto assign when scoping is disabled', function (): void {
-    $tenant  = TestTenant::create(['name' => 'Tenant A']);
+    $tenant = TestTenant::create(['name' => 'Tenant A']);
     $context = app(TenantContext::class);
     $context->setScoped(false);
     $context->setTenant($tenant);
@@ -152,7 +153,7 @@ describe('TenantMiddleware', function (): void {
 
         app()->instance(TenantResolver::class, $resolver);
 
-        $request    = Request::create('/test', 'GET');
+        $request = Request::create('/test', 'GET');
         $middleware = new TenantMiddleware;
 
         $response = $middleware->handle($request, function () {
@@ -195,7 +196,7 @@ describe('TenantMiddleware', function (): void {
     });
 
     it('sets tenant context from route when authorized', function (): void {
-        $userTenant  = TestTenant::create(['name' => 'Tenant A']);
+        $userTenant = TestTenant::create(['name' => 'Tenant A']);
         $routeTenant = TestTenant::create(['name' => 'Tenant B']);
 
         $resolver = new TestTenantResolver(
@@ -207,7 +208,7 @@ describe('TenantMiddleware', function (): void {
 
         app()->instance(TenantResolver::class, $resolver);
 
-        $request    = Request::create('/test', 'GET');
+        $request = Request::create('/test', 'GET');
         $middleware = new TenantMiddleware;
 
         $middleware->handle($request, function () {
@@ -222,7 +223,7 @@ describe('TenantMiddleware', function (): void {
     });
 
     it('throws authorization exception when route tenant is not in accessible keys', function (): void {
-        $userTenant  = TestTenant::create(['name' => 'Tenant A']);
+        $userTenant = TestTenant::create(['name' => 'Tenant A']);
         $routeTenant = TestTenant::create(['name' => 'Tenant B']);
 
         $resolver = new TestTenantResolver(
@@ -234,16 +235,16 @@ describe('TenantMiddleware', function (): void {
 
         app()->instance(TenantResolver::class, $resolver);
 
-        $request    = Request::create('/test', 'GET');
+        $request = Request::create('/test', 'GET');
         $middleware = new TenantMiddleware;
 
         $middleware->handle($request, function () {
             return response('ok');
         });
-    })->throws(Illuminate\Auth\Access\AuthorizationException::class);
+    })->throws(AuthorizationException::class);
 
     it('throws authorization exception when route tenant key is string and not in accessible keys', function (): void {
-        $userTenant  = TestTenant::create(['name' => 'Tenant A']);
+        $userTenant = TestTenant::create(['name' => 'Tenant A']);
         $routeTenant = TestTenant::create(['name' => 'Tenant B']);
 
         $resolver = new TestTenantResolver(
@@ -262,12 +263,12 @@ describe('TenantMiddleware', function (): void {
         $middleware->handle($request, function () {
             return response('ok');
         });
-    })->throws(Illuminate\Auth\Access\AuthorizationException::class);
+    })->throws(AuthorizationException::class);
 });
 
 describe('TenantScope', function (): void {
     it('applies global scope and filters by tenant keys', function (): void {
-        $tenant  = TestTenant::create(['name' => 'Tenant A']);
+        $tenant = TestTenant::create(['name' => 'Tenant A']);
         $context = app(TenantContext::class);
         $context->setScoped(true);
         $context->setTenantKeys([$tenant->getKey()]);
@@ -280,7 +281,7 @@ describe('TenantScope', function (): void {
     });
 
     it('does not apply scope when shouldScope returns false', function (): void {
-        $tenant  = TestTenant::create(['name' => 'Tenant A']);
+        $tenant = TestTenant::create(['name' => 'Tenant A']);
         $context = app(TenantContext::class);
         $context->setScoped(false);
         $context->setTenantKeys([$tenant->getKey()]);

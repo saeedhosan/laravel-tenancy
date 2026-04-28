@@ -6,6 +6,7 @@ namespace SaeedHosan\Tenancy\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SaeedHosan\Tenancy\Contracts\TenantResolver;
@@ -25,7 +26,7 @@ class TenantMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /** @var \Illuminate\Contracts\Auth\Authenticatable|null $user */
+        /** @var Authenticatable|null $user */
         $user = $request->user();
         $context = resolve(TenantContext::class);
         $resolver = resolve(TenantResolver::class);
