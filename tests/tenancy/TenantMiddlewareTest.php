@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ it('allows guest requests without tenant scoping', function (): void {
 
     app()->instance(TenantResolver::class, $resolver);
 
-    $request    = Request::create('/test', 'GET');
+    $request = Request::create('/test', 'GET');
     $middleware = new TenantMiddleware;
 
     $response = $middleware->handle($request, function () {
@@ -100,7 +101,7 @@ it('allows administrator users without tenant scoping', function (): void {
 });
 
 it('sets tenant context from route when authorized', function (): void {
-    $userTenant  = TestTenantForMiddleware::create(['name' => 'Tenant A']);
+    $userTenant = TestTenantForMiddleware::create(['name' => 'Tenant A']);
     $routeTenant = TestTenantForMiddleware::create(['name' => 'Tenant B']);
 
     $resolver = new TestTenantResolver(
@@ -112,7 +113,7 @@ it('sets tenant context from route when authorized', function (): void {
 
     app()->instance(TenantResolver::class, $resolver);
 
-    $request    = Request::create('/test', 'GET');
+    $request = Request::create('/test', 'GET');
     $middleware = new TenantMiddleware;
 
     $middleware->handle($request, function () {
@@ -127,7 +128,7 @@ it('sets tenant context from route when authorized', function (): void {
 });
 
 it('throws authorization exception when route tenant is not in accessible keys', function (): void {
-    $userTenant  = TestTenantForMiddleware::create(['name' => 'Tenant A']);
+    $userTenant = TestTenantForMiddleware::create(['name' => 'Tenant A']);
     $routeTenant = TestTenantForMiddleware::create(['name' => 'Tenant B']);
 
     $resolver = new TestTenantResolver(
@@ -139,16 +140,16 @@ it('throws authorization exception when route tenant is not in accessible keys',
 
     app()->instance(TenantResolver::class, $resolver);
 
-    $request    = Request::create('/test', 'GET');
+    $request = Request::create('/test', 'GET');
     $middleware = new TenantMiddleware;
 
     $middleware->handle($request, function () {
         return response('ok');
     });
-})->throws(Illuminate\Auth\Access\AuthorizationException::class);
+})->throws(AuthorizationException::class);
 
 it('throws authorization exception when route tenant key is string and not in accessible keys', function (): void {
-    $userTenant  = TestTenantForMiddleware::create(['name' => 'Tenant A']);
+    $userTenant = TestTenantForMiddleware::create(['name' => 'Tenant A']);
     $routeTenant = TestTenantForMiddleware::create(['name' => 'Tenant B']);
 
     $resolver = new TestTenantResolver(
@@ -167,4 +168,4 @@ it('throws authorization exception when route tenant key is string and not in ac
     $middleware->handle($request, function () {
         return response('ok');
     });
-})->throws(Illuminate\Auth\Access\AuthorizationException::class);
+})->throws(AuthorizationException::class);

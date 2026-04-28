@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SaeedHosan\Tenancy\Tests\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
+use Illuminate\Http\Request;
+use SaeedHosan\Tenancy\Concerns\HasTenant;
+use SaeedHosan\Tenancy\Contracts\TenantResolver;
 
 class TestTenant extends Model
 {
@@ -27,7 +31,7 @@ class OtherTenant extends Model
 
 class TenantAwareModel extends Model
 {
-    use \SaeedHosan\Tenancy\Concerns\HasTenant;
+    use HasTenant;
 
     public $timestamps = false;
 
@@ -38,7 +42,7 @@ class TenantAwareModel extends Model
 
 class CustomTenantKeyModel extends Model
 {
-    use \SaeedHosan\Tenancy\Concerns\HasTenant;
+    use HasTenant;
 
     public $timestamps = false;
 
@@ -59,7 +63,7 @@ class TestUser extends AuthenticatableUser
     protected $guarded = [];
 }
 
-class TestTenantResolver implements \SaeedHosan\Tenancy\Contracts\TenantResolver
+class TestTenantResolver implements TenantResolver
 {
     public function __construct(
         private bool $shouldScope = true,
@@ -78,22 +82,22 @@ class TestTenantResolver implements \SaeedHosan\Tenancy\Contracts\TenantResolver
         return 'tenant_id';
     }
 
-    public function resolveUserTenant(?\Illuminate\Contracts\Auth\Authenticatable $user): ?Model
+    public function resolveUserTenant(?Authenticatable $user): ?Model
     {
         return $this->userTenant;
     }
 
-    public function resolveRouteTenant(\Illuminate\Http\Request $request): ?Model
+    public function resolveRouteTenant(Request $request): ?Model
     {
         return $this->routeTenant;
     }
 
-    public function resolveAccessibleTenantKeys(?\Illuminate\Contracts\Auth\Authenticatable $user, ?Model $userTenant): array
+    public function resolveAccessibleTenantKeys(?Authenticatable $user, ?Model $userTenant): array
     {
         return $this->accessibleKeys;
     }
 
-    public function shouldScope(?\Illuminate\Contracts\Auth\Authenticatable $user): bool
+    public function shouldScope(?Authenticatable $user): bool
     {
         return $this->shouldScope;
     }
