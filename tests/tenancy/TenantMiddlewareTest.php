@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Schema;
 use SaeedHosan\Tenancy\Contracts\TenantResolver;
 use SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware;
 use SaeedHosan\Tenancy\TenantContext;
-use SaeedHosan\Tenancy\Tests\Models\TestTenant as TestTenantForMiddleware;
-use SaeedHosan\Tenancy\Tests\Models\TestTenantResolver;
-use SaeedHosan\Tenancy\Tests\Models\TestUser;
+use Tests\Models\TestTenant as TestTenantForMiddleware;
+use Tests\Models\TestTenantResolver;
+use Tests\Models\TestUser;
 
 uses(RefreshDatabase::class);
 

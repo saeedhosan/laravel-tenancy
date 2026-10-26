@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Schema;
 use SaeedHosan\Tenancy\Contracts\TenantResolver;
 use SaeedHosan\Tenancy\Http\Middleware\TenantMiddleware;
 use SaeedHosan\Tenancy\TenantContext;
-use SaeedHosan\Tenancy\Tests\Models\CustomTenantKeyModel;
-use SaeedHosan\Tenancy\Tests\Models\TenantAwareModel;
-use SaeedHosan\Tenancy\Tests\Models\TestTenant;
-use SaeedHosan\Tenancy\Tests\Models\TestTenantResolver;
-use SaeedHosan\Tenancy\Tests\Models\TestUser;
+use Tests\Models\CustomTenantKeyModel;
+use Tests\Models\TenantAwareModel;
+use Tests\Models\TestTenant;
+use Tests\Models\TestTenantResolver;
+use Tests\Models\TestUser;
 
 uses(RefreshDatabase::class);
 

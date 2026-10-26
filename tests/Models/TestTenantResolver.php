@@ -2,66 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SaeedHosan\Tenancy\Tests\Models;
+namespace Tests\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 use Illuminate\Http\Request;
-use SaeedHosan\Tenancy\Concerns\HasTenant;
 use SaeedHosan\Tenancy\Contracts\TenantResolver;
-
-class TestTenant extends Model
-{
-    protected $table = 'tenants';
-
-    protected $guarded = [];
-
-    public $timestamps = false;
-}
-
-class OtherTenant extends Model
-{
-    protected $table = 'tenants';
-
-    protected $guarded = [];
-
-    public $timestamps = false;
-}
-
-class TenantAwareModel extends Model
-{
-    use HasTenant;
-
-    public $timestamps = false;
-
-    protected $table = 'tenant_aware_models';
-
-    protected $guarded = [];
-}
-
-class CustomTenantKeyModel extends Model
-{
-    use HasTenant;
-
-    public $timestamps = false;
-
-    protected $table = 'custom_tenant_models';
-
-    protected $guarded = [];
-
-    public function getTenantKeyName(): string
-    {
-        return 'tenant_id';
-    }
-}
-
-class TestUser extends AuthenticatableUser
-{
-    public $timestamps = false;
-
-    protected $guarded = [];
-}
 
 class TestTenantResolver implements TenantResolver
 {

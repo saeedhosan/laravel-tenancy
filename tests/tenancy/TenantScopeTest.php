@@ -6,9 +6,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use SaeedHosan\Tenancy\TenantContext;
-use SaeedHosan\Tenancy\Tests\Models\CustomTenantKeyModel;
-use SaeedHosan\Tenancy\Tests\Models\TenantAwareModel;
-use SaeedHosan\Tenancy\Tests\Models\TestTenant;
+use Tests\Models\CustomTenantKeyModel;
+use Tests\Models\TenantAwareModel;
+use Tests\Models\TestTenant;
 
 uses(RefreshDatabase::class);
 
