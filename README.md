@@ -4,8 +4,8 @@ A clean and simple multi-tenancy package for Laravel applications.
 
 ## Requirements
 
--   PHP 8.0+
--   Laravel 11.0+
+- PHP ^8.4
+- Laravel ^13
 
 ## Installation
 
@@ -120,8 +120,8 @@ class Post extends Model
 
 The trait automatically:
 
--   Adds a global scope to filter by tenant
--   Auto-assigns `tenant_id` on model creation
+- Adds a global scope to filter by tenant
+- Auto-assigns `tenant_id` on model creation
 
 ### 3. Add the Middleware
 
@@ -170,4 +170,4 @@ Post::query()->withoutcurrentTenant()->get();
 
 ## License
 
-MIT
+**Laravel Tenancy** was created by **[Saeed Hosan](https://www.linkedin.com/in/saeedhosan)** under the **[MIT license](https://opensource.org/licenses/MIT)**.

@@ -2,29 +2,12 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use SaeedHosan\Tenancy\TenantContext;
-
-class TestTenantForContext extends Model
-{
-    public $timestamps = false;
-
-    protected $table = 'tenants';
-
-    protected $guarded = [];
-}
-
-class OtherTenantContext extends Model
-{
-    public $timestamps = false;
-
-    protected $table = 'tenants';
-
-    protected $guarded = [];
-}
+use Tests\Models\OtherTenantContext;
+use Tests\Models\TestTenantForContext;
 
 uses(RefreshDatabase::class);
 

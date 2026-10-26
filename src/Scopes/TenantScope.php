@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use SaeedHosan\Tenancy\TenantContext;
 
+/**
+ * @implements Scope<Model>
+ */
 final class TenantScope implements Scope
 {
     /**
      * Apply the tenant scope to a given Eloquent query builder.
      *
-     * @param  Builder<Model>  $builder  The Eloquent query builder
+     * @param  Builder<covariant Model>  $builder  The Eloquent query builder
      * @param  Model  $model  The model being queried
      */
     public function apply(Builder $builder, Model $model): void

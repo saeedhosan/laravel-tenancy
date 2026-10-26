@@ -2,23 +2,12 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Model;
 use SaeedHosan\Tenancy\Contracts\TenantResolver;
 use SaeedHosan\Tenancy\Exceptions\TenancyException;
 use SaeedHosan\Tenancy\ServiceProvider;
 use SaeedHosan\Tenancy\TenantContext;
 use SaeedHosan\Tenancy\TenantResolver as TenancyTenantResolver;
-
-class InvalidResolver {}
-
-class ProviderTestTenant extends Model
-{
-    protected $table = 'tenants';
-
-    protected $guarded = [];
-
-    public $timestamps = false;
-}
+use Tests\Support\InvalidResolver;
 
 beforeEach(function (): void {
     app()->register(ServiceProvider::class);
